@@ -64,7 +64,7 @@
 				function _currently_executing_script_dir()
 				{
 					$backtrace = debug_backtrace();
-					$currently_executing_script = array_pop($backtrace);
+					$currently_executing_script = $backtrace[3];
 					return dirname($currently_executing_script['file']).DIRECTORY_SEPARATOR;
 				}
 
