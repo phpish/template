@@ -64,7 +64,8 @@
 				function _currently_executing_script_dir()
 				{
 					$backtrace = debug_backtrace();
-					$currently_executing_script = $backtrace[3];
+					if ('phpish\template\compose' == $backtrace[4]['function']) $currently_executing_script = $backtrace[4];
+					else $currently_executing_script = $backtrace[3];
 					return dirname($currently_executing_script['file']).DIRECTORY_SEPARATOR;
 				}
 
@@ -77,7 +78,7 @@
 	function compose($template, $template_vars)
 	{
 		$args = array_slice(func_get_args(), 2);
-		$content = template_render($template, $template_vars);
+		$content = render($template, $template_vars);
 
 		while(!empty($args))
 		{
