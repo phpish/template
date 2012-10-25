@@ -72,17 +72,17 @@
 			}
 
 
-	function compose($template, $template_vars)
+	function compose($template)
 	{
-		$args = array_slice(func_get_args(), 2);
+		$args = array_slice(func_get_args(), 1);
+		$template_vars = (!empty($args) and (is_array($args[0]))) ? array_shift($args) : array();
 		$content = render($template, $template_vars);
 
 		while(!empty($args))
 		{
 			$template = array_shift($args);
-			$template_vars = empty($args) ? array() : array_shift($args);
-			$content = array('content'=>$content);
-			$template_vars = array_merge($template_vars, $content);
+			$template_vars = (!empty($args) and (is_array($args[0]))) ? (array_shift($args) + $template_vars) : $template_vars;
+			$template_vars['content'] = $content;
 			$content = render($template, $template_vars);
 		}
 
