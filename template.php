@@ -3,9 +3,9 @@
 	namespace phpish\template;
 
 
-	function render($template, $template_vars=array(), $template_dir=NULL)
+	function render($template, $template_vars=array())
 	{
-		$template_file = filename($template, $template_dir);
+		$template_file = filename($template);
 
 		if (file_exists($template_file))
 		{
@@ -25,7 +25,7 @@
 		return false;
 	}
 
-		function filename($template, $template_dir=NULL)
+		function filename($template)
 		{
 			if (_has_absolute_path($template))
 			{
@@ -33,7 +33,7 @@
 			}
 			else
 			{
-				$template_dir = $template_dir ?: basedir() ?: default_basedir();
+				$template_dir = basedir() ?: default_basedir();
 			}
 
 			$template_dir = !empty($template_dir) ? rtrim($template_dir, '/\\').DIRECTORY_SEPARATOR : $template_dir;
@@ -63,10 +63,7 @@
 
 				function _currently_executing_script_dir()
 				{
-					$backtrace = debug_backtrace();
-					if ('phpish\template\compose' == $backtrace[4]['function']) $currently_executing_script = $backtrace[4];
-					else $currently_executing_script = $backtrace[3];
-					return dirname($currently_executing_script['file']).DIRECTORY_SEPARATOR;
+					return dirname($_SERVER['SCRIPT_FILENAME']).DIRECTORY_SEPARATOR;
 				}
 
 			function _slashes_to_directory_separator($path)
