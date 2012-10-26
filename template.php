@@ -80,6 +80,11 @@
 
 		while(!empty($args))
 		{
+			if (is_null($args[0]))
+			{
+				array_shift($args);
+				continue;
+			}
 			$template = array_shift($args);
 			$template_vars = (!empty($args) and (is_array($args[0]))) ? (array_shift($args) + $template_vars) : $template_vars;
 			$template_vars['content'] = $content;
