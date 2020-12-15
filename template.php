@@ -43,7 +43,7 @@
 
 			function _has_absolute_path($template)
 			{
-				$begins_with_directory_separator = (DIRECTORY_SEPARATOR === $template{0});
+				$begins_with_directory_separator = (DIRECTORY_SEPARATOR === $template[0]);
 				$begins_with_windows_drive_letter = (':\\' === substr($template, 1, 2));
 				$begins_with_network_drive = ('\\\\' === substr($template, 0, 2));
 				return ($begins_with_directory_separator or $begins_with_windows_drive_letter or $begins_with_network_drive);
